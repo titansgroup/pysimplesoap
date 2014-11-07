@@ -345,10 +345,13 @@ class SimpleXMLElement(object):
 
             try:
                 if isinstance(types, dict):
+                    if name == 'item':
+                        name = types.keys()[0]
+
                     fn = types[name]
                     # custom array only in the response (not defined in the WSDL):
                     # <results soapenc:arrayType="xsd:string[199]>
-                    if any([k for k,v in node[:] if 'arrayType' in k]) and not isinstance(fn, list):
+                    if any([k for k, v in node[:] if 'arrayType' in k]) and not isinstance(fn, list):
                         fn = [fn]
                 else:
                     fn = types
